@@ -18,4 +18,14 @@ executable haskell-santize
   main-is:             haskell-sanitize.hs
   ghc-options:         -Wall -O2
   hs-source-dirs:      main
-  build-depends:       base >=4.9 && <4.10
+  build-depends:       base >= 4.9 && < 4.10
+
+  include-dirs:        csrc
+
+  install-includes:    dodgy.h
+
+
+  c-sources:           csrc/dodgy.c
+
+  cc-options:          -std=c99 -O2 -Wall -Werror -fsanitize=address -g
+  extra-libraries:     asan
