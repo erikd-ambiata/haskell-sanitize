@@ -1,9 +1,19 @@
 
 
-all : dist/build/c-sanitize
-	dist/build/c-sanitize
+CC = gcc
 
+all : dist/build/c-sanitize/c-sanitize
+	dist/build/c-sanitize/c-sanitize
 
-dist/build/c-sanitize : main/c-sanitize.c csrc/dodgy.c
+clean :
+	rm -f csrc/*.o main/*.o dist/build/c-sanitize/c-sanitize
+
+dist/build/c-sanitize/c-sanitize : main/c-sanitize.o csrc/dodgy.o
 	mkdir -p $$(dirname $@)
-	gcc -Wall -fsanitize=address -g -I csrc $+ -o $@
+	$(CC) $+ -lasan -o $@
+
+main/c-sanitize.o : main/c-sanitize.c
+	$(CC) -Wall -g -I csrc -c $+ -o $@
+
+csrc/dodgy.o : csrc/dodgy.c
+	$(CC) -Wall -fsanitize=address -g -I csrc -c $+ -o $@
