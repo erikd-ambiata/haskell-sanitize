@@ -4,11 +4,11 @@
 
 #include <dodgy.h>
 
-static int64_t array [10] = { 0, };
+
 
 int64_t
 dodgy_addition (int64_t a, int64_t b)
-{
+{	int64_t array [10] = { 0, };
 	int64_t sum = a + b ;
 
 	/* Deliberately bad code to see if we can call this from Haskell and
