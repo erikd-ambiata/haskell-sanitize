@@ -1,19 +1,15 @@
 
+CC = clang
 
-CC = gcc
-
-all : dist/build/c-sanitize/c-sanitize
-	dist/build/c-sanitize/c-sanitize
+all : haskell-sanitize c-sanitize
+	./haskell-sanitize
+	./c-sanitize
 
 clean :
-	rm -f csrc/*.o main/*.o dist/build/c-sanitize/c-sanitize
+	rm -f csrc/*.o main/*.o main/*.hi c-sanitize haskell-sanitize
 
-dist/build/c-sanitize/c-sanitize : main/c-sanitize.o csrc/dodgy.o
-	mkdir -p $$(dirname $@)
-	$(CC) $+ -lasan -o $@
+c-sanitize : main/c-sanitize.c csrc/dodgy.c
+	$(CC) -Wall -fsanitize=address -g -I csrc $+ -o $@
 
-main/c-sanitize.o : main/c-sanitize.c
-	$(CC) -Wall -g -I csrc -c $+ -o $@
-
-csrc/dodgy.o : csrc/dodgy.c
-	$(CC) -Wall -fsanitize=address -g -I csrc -c $+ -o $@
+haskell-sanitize : main/haskell-sanitize.hs csrc/dodgy.c
+	ghc -Wall -Icsrc -optc "-fsanitize=address" -optc -g -lasan $+ -o $@
