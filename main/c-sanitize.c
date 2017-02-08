@@ -7,7 +7,7 @@ int
 main (void)
 {
 	test_safe_call () ;
-	printf ("%ld\n", dodgy_addition (1000, 1065)) ;
+	printf ("%ld\n", dodgy_addition (8, 5)) ;
 
 	return 0 ;
 }

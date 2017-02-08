@@ -3,7 +3,7 @@ import Foreign.C.Types
 main :: IO ()
 main = do
   test_safe_call
-  print $ dodgy_addition 1000 1065
+  print $ dodgy_addition 8 5
 
 
 foreign import ccall unsafe
